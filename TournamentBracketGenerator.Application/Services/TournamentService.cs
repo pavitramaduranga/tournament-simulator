@@ -4,12 +4,26 @@ namespace TournamentBracketGenerator.Application.Services
 {
     internal class TournamentService
     {
-        private List<Team> teams = new List<Team>();
-        private List<MatchEvent> matchEvents = new List<MatchEvent>();
+        private List<Team> teams = new();
+        private List<MatchEvent> matchEvents = new();
 
-        public Team? GetTournamentWinner() => teams.Count == 1 ? teams[0] : null;
+        internal void AdvanceTeam(List<Team> topTeams)
+        {
+            teams = topTeams;
 
-        public void PathToVictory(Team team)
+            while (teams.Count != 1)
+            {
+                PairTeams();
+                SimulateMatches();
+            }
+
+            PathToVictory(GetTournamentWinner());
+            ClearTournamentData();
+        }
+
+        private Team? GetTournamentWinner() => teams.Count == 1 ? teams[0] : null;
+
+        private void PathToVictory(Team team)
         {
             Console.WriteLine("-------------------------------------------------");
             Console.WriteLine("Tournament Path to Victory:");
@@ -26,7 +40,7 @@ namespace TournamentBracketGenerator.Application.Services
             }
         }
 
-        public Team SimulateMatch(Team team1, Team team2)
+        private void SimulateMatch(Team team1, Team team2)
         {
             Random random = new Random();
             Team winner = random.Next(2) == 0 ? team1 : team2;
@@ -35,11 +49,9 @@ namespace TournamentBracketGenerator.Application.Services
             Console.WriteLine($"{team1.Name} vs {team2.Name} - {winner.Name} wins");
             matchEvents.Add(new MatchEvent(winner.Name, loser.Name));
             teams.Remove(loser);
-
-            return winner;
         }
 
-        public void PairTeams()
+        private void PairTeams()
         {
             int totalTeams = teams.Count;
             int halfTotalTeams = totalTeams / 2;
@@ -56,25 +68,6 @@ namespace TournamentBracketGenerator.Application.Services
             teams = teams.OrderBy(team => team.Seed).ToList(); // Ensure teams are ordered by seed
         }
 
-        public void SimulateTournament(int numberOfTeams)
-        {
-            TeamService teamService = new TeamService();
-            teams = teamService.SeedTeams(numberOfTeams);
-            AdvanceTeam();
-        }
-
-        private void AdvanceTeam()
-        {
-            while (teams.Count != 1)
-            {
-                PairTeams();
-                SimulateMatches();
-            }
-
-            PathToVictory(GetTournamentWinner());
-            ClearTournamentData();
-        }
-
         private void SimulateMatches()
         {
             var teamList = teams.ToList();
@@ -85,16 +78,11 @@ namespace TournamentBracketGenerator.Application.Services
             }
         }
 
-        public void ClearTournamentData()
+        private void ClearTournamentData()
         {
             teams.Clear();
             matchEvents.Clear();
         }
 
-        internal void SimulateTournamentFromTopTeams(List<Team> topTeams)
-        {
-            teams = topTeams;
-            AdvanceTeam();
-        }
     }
 }

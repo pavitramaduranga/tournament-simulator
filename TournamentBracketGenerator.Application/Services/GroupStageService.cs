@@ -1,10 +1,11 @@
-﻿using TournamentBracketGenerator.Application.Models;
+﻿using TournamentBracketGenerator.Application.Interfaces;
+using TournamentBracketGenerator.Application.Models;
 
 namespace TournamentBracketGenerator.Application.Services
 {
-    public class GroupStageService
+    public class GroupStageService : IGroupStageService
     {
-        public void SimulateGroupStage(int numberOfTeams)
+        public void SimulateTournament(int numberOfTeams)
         {
             TeamService teamService = new TeamService();//
             TournamentService tournamentService = new TournamentService();//
@@ -42,10 +43,10 @@ namespace TournamentBracketGenerator.Application.Services
 
             Console.WriteLine("\nTop Teams from the Group Stage in Single Elimination round ");
 
-            tournamentService.SimulateTournamentFromTopTeams(topTeams);
+            tournamentService.AdvanceTeam(topTeams);
         }
 
-        private List<Team> GetTopTeams(List<Team> group, int topCount)
+        private static List<Team> GetTopTeams(List<Team> group, int topCount)
         {
             Dictionary<Team, int> pointsDictionary = new Dictionary<Team, int>();
 
@@ -84,5 +85,6 @@ namespace TournamentBracketGenerator.Application.Services
 
             return points;
         }
+
     }
 }

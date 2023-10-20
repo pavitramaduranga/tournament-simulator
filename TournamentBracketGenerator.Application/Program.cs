@@ -4,7 +4,7 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("Tournament Dashboard");
+        Console.WriteLine("****Tournament Dashboard****");
 
         int option = 0;
         while (option != 3)
@@ -31,16 +31,16 @@ class Program
 
     private static void HandleUserInput(int option)
     {
-        TournamentService tournamentService = new TournamentService();
+        SingleEliminationStageService singleEliminationStageService = new SingleEliminationStageService();
         GroupStageService groupStageService = new GroupStageService();
 
         switch (option)
         {
             case 1:
-                groupStageService.SimulateGroupStage(32);
+                groupStageService.SimulateTournament(32);
                 break;
             case 2:
-                tournamentService.SimulateTournament(16);
+                singleEliminationStageService.SimulateTournament(16);
                 break;
             case 3:
                 Console.WriteLine("Exiting the program.");
