@@ -1,24 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-class Team
-{
-    public string Name { get; set; }
-    public int Seed { get; set; }
-    public Team NextRoundOpponent { get; set; }
-}
-
-class MatchEvent
-{
-    public string Winner { get; set; }
-    public string Loser { get; set; }
-    public MatchEvent(string winner, string loser)
-    {
-        Winner = winner;
-        Loser = loser;
-    }
-}
+﻿using TournamentBracketGenerator.Application.Models;
 
 class Tournament
 {
@@ -211,12 +191,12 @@ class Program
 {
     static void Main()
     {
-        Tournament tournament = new Tournament();
+        Tournament tournament = new();
 
         Console.WriteLine("Tournament Dashboard");
 
         int option = 0;
-        while (option != 4)
+        while (option != 5)
         {
             Console.WriteLine("Select an option:");
             Console.WriteLine("1. Simulate Group Stage");
