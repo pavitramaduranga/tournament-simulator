@@ -107,6 +107,8 @@ class Tournament
             team1.NextRoundOpponent = team2;
             team2.NextRoundOpponent = team1;
         }
+
+        teams = teams.OrderBy(team => team.Seed).ToList(); // Ensure teams are ordered by seed
     }
 
     public void SimulateTournament()
@@ -124,7 +126,6 @@ class Tournament
 
         PathToVictory(GetTournamentWinner());
     }
-
     #endregion
 
     #region Grouping stage
@@ -198,11 +199,12 @@ class Tournament
         {
             Console.WriteLine($"{team.Name} (Seed {team.Seed})");
         }
+        this.teams = topTeams; // Assign the top teams to the tournament
+
+        Console.WriteLine("\nTop Teams from the Group Stage in Single Elimination round ");
+        SimulateTournament();
     }
-
     #endregion
-
-
 }
 
 class Program
@@ -218,9 +220,10 @@ class Program
         {
             Console.WriteLine("Select an option:");
             Console.WriteLine("1. Simulate Group Stage");
-            Console.WriteLine("2. Simulate World cup");
-            Console.WriteLine("3. Simulate NCAA soccer");
-            Console.WriteLine("4. Exit");
+            Console.WriteLine("2. Simulate World cup Tournament");
+            Console.WriteLine("3. Simulate NCAA soccer Tournament");
+            Console.WriteLine("4. Show Path to Victory");
+            Console.WriteLine("5. Exit");
             if (int.TryParse(Console.ReadLine(), out option))
             {
                 switch (option)
@@ -238,15 +241,20 @@ class Program
                         tournament.SimulateTournament();
                         break;
                     case 4:
+                        Console.WriteLine("Enter the team name to show its path to victory (e.g., Team 3A):");
+                        string teamName = Console.ReadLine();
+                        Team team = tournament.teams.FirstOrDefault(t => t.Name == teamName);
+                        tournament.PathToVictory(team);
+                        break;
+                    case 5:
                         Console.WriteLine("Exiting the program.");
                         break;
                     default:
                         Console.WriteLine("Invalid option. Please select a valid option.");
                         break;
                 }
-
                 tournament.teams.Clear();
-
+                tournament.matchEvents.Clear();
             }
             else
             {
