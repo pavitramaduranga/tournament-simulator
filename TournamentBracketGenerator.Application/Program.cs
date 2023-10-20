@@ -2,16 +2,9 @@
 
 class Tournament
 {
-    public List<Team> teams;
-    public List<MatchEvent> matchEvents;
+    private List<Team> teams = new List<Team>();
+    private List<MatchEvent> matchEvents = new List<MatchEvent>();
 
-    public Tournament()
-    {
-        teams = new List<Team>();
-        matchEvents = new List<MatchEvent>();
-    }
-
-    #region Seed data
     public void SeedTeam(int seed, string teamName)
     {
         Team team = new Team { Name = teamName, Seed = seed };
@@ -22,21 +15,18 @@ class Tournament
     {
         for (int seed = 1; seed <= numberOfTeams; seed++)
         {
-            string teamName = $"Team {seed}A";
-            if (seed > numberOfTeams / 2)
-            {
-                teamName = $"Team {seed - numberOfTeams / 2}B";
-            }
+            string teamName = GenerateTeamName(seed, numberOfTeams);
             SeedTeam(seed, teamName);
         }
     }
-    #endregion
 
-    #region Tournament
-    public Team? GetTournamentWinner()
+    private string GenerateTeamName(int seed, int numberOfTeams)
     {
-        return teams.Count == 1 ? teams[0] : null;
+        char group = (char)('A' + (seed - 1) / (numberOfTeams / 2));
+        return $"Team {seed}{group}";
     }
+
+    public Team? GetTournamentWinner() => teams.Count == 1 ? teams[0] : null;
 
     public void PathToVictory(Team team)
     {
@@ -58,20 +48,14 @@ class Tournament
     public Team SimulateMatch(Team team1, Team team2)
     {
         Random random = new Random();
-        if (random.Next(2) == 0)
-        {
-            Console.WriteLine($"{team1.Name} vs {team2.Name} - {team1.Name} wins");
-            matchEvents.Add(new MatchEvent(team1.Name, team2.Name));
-            teams.Remove(team2);
-            return team1;
-        }
-        else
-        {
-            Console.WriteLine($"{team1.Name} vs {team2.Name} - {team2.Name} wins");
-            matchEvents.Add(new MatchEvent(team2.Name, team1.Name));
-            teams.Remove(team1);
-            return team2;
-        }
+        Team winner = random.Next(2) == 0 ? team1 : team2;
+        Team loser = winner == team1 ? team2 : team1;
+
+        Console.WriteLine($"{team1.Name} vs {team2.Name} - {winner.Name} wins");
+        matchEvents.Add(new MatchEvent(winner.Name, loser.Name));
+        teams.Remove(loser);
+
+        return winner;
     }
 
     public void PairTeams()
@@ -96,26 +80,28 @@ class Tournament
         while (teams.Count != 1)
         {
             PairTeams();
-            var teamList = teams.ToList();
-            for (int i = 0; i < teamList.Count / 2; i++)
-            {
-                var team = teamList[i];
-                SimulateMatch(team, team.NextRoundOpponent);
-            }
+            SimulateMatches();
         }
 
         PathToVictory(GetTournamentWinner());
     }
 
-    public void ClearTournamentData()
+    private void SimulateMatches()
     {
-        this.teams.Clear();
-        this.matchEvents.Clear();
+        var teamList = teams.ToList();
+        for (int i = 0; i < teamList.Count / 2; i++)
+        {
+            var team = teamList[i];
+            SimulateMatch(team, team.NextRoundOpponent);
+        }
     }
 
-    #endregion
+    public void ClearTournamentData()
+    {
+        teams.Clear();
+        matchEvents.Clear();
+    }
 
-    #region Grouping stage
     public List<Team> GetTopTeams(List<Team> group, int topCount)
     {
         Dictionary<Team, int> pointsDictionary = new Dictionary<Team, int>();
@@ -133,7 +119,7 @@ class Tournament
         return topTeams;
     }
 
-    private int SimulateGroupMatches(Team team, List<Team> group)
+    private static int SimulateGroupMatches(Team team, List<Team> group)
     {
         int points = 0;
 
@@ -191,55 +177,59 @@ class Tournament
         Console.WriteLine("\nTop Teams from the Group Stage in Single Elimination round ");
         SimulateTournament();
     }
-    #endregion
 }
 
 class Program
 {
     static void Main()
     {
-        Tournament tournament = new();
+        Tournament tournament = new Tournament();
 
         Console.WriteLine("Tournament Dashboard");
 
         int option = 0;
-        while (option != 5)
+        while (option != 3)
         {
-            Console.WriteLine("Select an option:");
-            Console.WriteLine("1. Simulate Group Stage");
-            Console.WriteLine("2. Simulate World cup Tournament");
-            Console.WriteLine("3. Simulate NCAA soccer Tournament");
-            Console.WriteLine("4. Exit");
+            DisplayMenu();
             if (int.TryParse(Console.ReadLine(), out option))
             {
-                switch (option)
-                {
-                    case 1:
-                        tournament.SeedTeams(32);
-                        tournament.SimulateGroupStage();
-                        break;
-                    case 2:
-                        tournament.SeedTeams(16);
-                        tournament.SimulateTournament();
-                        break;
-                    case 3:
-                        tournament.SeedTeams(64);
-                        tournament.SimulateTournament();
-                        break;
-                    case 4:
-                        Console.WriteLine("Exiting the program.");
-                        break;
-                    default:
-                        Console.WriteLine("Invalid option. Please select a valid option.");
-                        break;
-                }
-
-                tournament.ClearTournamentData();
+                HandleUserInput(option, tournament);
             }
             else
             {
                 Console.WriteLine("Invalid input. Please enter a valid option.");
             }
+        }
+    }
+
+    private static void DisplayMenu()
+    {
+        Console.WriteLine("Select an option:");
+        Console.WriteLine("1. Simulate Group Stage");
+        Console.WriteLine("2. Simulate World Cup Tournament");
+        Console.WriteLine("3. Exit");
+    }
+
+    private static void HandleUserInput(int option, Tournament tournament)
+    {
+        switch (option)
+        {
+            case 1:
+                tournament.SeedTeams(32);
+                tournament.SimulateGroupStage();
+                tournament.ClearTournamentData();
+                break;
+            case 2:
+                tournament.SeedTeams(16);
+                tournament.SimulateTournament();
+                tournament.ClearTournamentData();
+                break;
+            case 3:
+                Console.WriteLine("Exiting the program.");
+                break;
+            default:
+                Console.WriteLine("Invalid option. Please select a valid option.");
+                break;
         }
     }
 }
