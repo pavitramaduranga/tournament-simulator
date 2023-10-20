@@ -9,13 +9,26 @@ class Team
     public Team NextRoundOpponent { get; set; }
 }
 
+class MatchEvent
+{
+    public string Winner { get; set; }
+    public string Loser { get; set; }
+    public MatchEvent(string winner, string loser)
+    {
+        Winner = winner;
+        Loser = loser;
+    }
+}
+
 class Tournament
 {
-    public List<Team> teams; // Make the teams field public
+    public List<Team> teams;
+    public List<MatchEvent> matchEvents;
 
     public Tournament()
     {
         teams = new List<Team>();
+        matchEvents = new List<MatchEvent>();
     }
 
     public void SeedTeam(int seed, string teamName)
@@ -63,26 +76,37 @@ class Tournament
     public void PathToVictory()
     {
         Console.WriteLine("Tournament Path to Victory:");
-        foreach (var team in teams)
+        Team winner = GetTournamentWinner();
+        if (winner != null)
         {
-            Console.WriteLine($"{team.Name} (Seed {team.Seed})");
+            List<string> path = new List<string>();
+            path.Add($"{winner.Name} (Seed {winner.Seed}) - Tournament Winner");
+
+            foreach (MatchEvent matchEvent in matchEvents)
+            {
+                path.Add($"{matchEvent.Winner} defeated {matchEvent.Loser}");
+            }
+
+            foreach (var step in path)
+            {
+                Console.WriteLine(step);
+            }
         }
     }
 
     public void SimulateMatch(Team team1, Team team2)
     {
-        // Simulate a match between two teams. You can use your own logic here.
         Random random = new Random();
         if (random.Next(2) == 0)
         {
-            // Remove the losing team and advance the winning team
             Console.WriteLine($"{team1.Name} vs {team2.Name} - {team1.Name} wins");
+            matchEvents.Add(new MatchEvent(team1.Name, team2.Name));
             teams.Remove(team2);
         }
         else
         {
-            // Remove the losing team and advance the winning team
             Console.WriteLine($"{team1.Name} vs {team2.Name} - {team2.Name} wins");
+            matchEvents.Add(new MatchEvent(team2.Name, team1.Name));
             teams.Remove(team1);
         }
     }
@@ -97,7 +121,6 @@ class Tournament
             Team team1 = teams[i];
             Team team2 = teams[totalTeams - i - 1];
 
-            // Set the next round opponent for each team
             team1.NextRoundOpponent = team2;
             team2.NextRoundOpponent = team1;
         }
@@ -110,41 +133,30 @@ class Program
     {
         Tournament tournament = new Tournament();
 
-        // Seed 16 teams
         int numberOfTeams = 16;
         tournament.SeedTeams(numberOfTeams);
 
-        // Simulate the tournament until a winner is found
         while (tournament.teams.Count != 1)
         {
-            // Call PairTeams to pair half of the teams for the next round
             tournament.PairTeams();
-
-            // Simulate matches
-            var teamList = tournament.teams.ToList(); // Use ToList to avoid collection modification error
+            var teamList = tournament.teams.ToList();
             for (int i = 0; i < teamList.Count / 2; i++)
             {
                 var team = teamList[i];
                 tournament.SimulateMatch(team, team.NextRoundOpponent);
             }
-
         }
 
-        // Simulate the final match (championship match)
         if (tournament.teams.Count == 1)
         {
             Team team1 = tournament.teams[0];
             Team team2 = tournament.teams[0].NextRoundOpponent;
-
             Console.WriteLine($"Final Match: {team1.Name} vs {team2.Name}");
             tournament.SimulateMatch(team1, team2);
         }
 
-
-        // Display the path to victory
         tournament.PathToVictory();
 
-        // Display the tournament winner
         Team winner = tournament.GetTournamentWinner();
         Console.WriteLine($"Tournament Winner: {winner.Name} (Seed {winner.Seed})");
     }
