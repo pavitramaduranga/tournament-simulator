@@ -6,3 +6,5 @@
 /TournamentBracketGenerator/obj
 /TournamentBracketGenerator.Application/obj
 /TournamentBracketGenerator.Application/bin/Debug/net6.0
+/TournamentBracketGenerator.UnitTests/obj
+/TournamentBracketGenerator.UnitTests/bin/Debug/net6.0
