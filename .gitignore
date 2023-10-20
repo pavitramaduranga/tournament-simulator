@@ -4,3 +4,5 @@
 
 /TournamentBracketGenerator/.vs/TournamentBracketGenerator
 /TournamentBracketGenerator/obj
+/TournamentBracketGenerator.Application/obj
+/TournamentBracketGenerator.Application/bin/Debug/net6.0

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentBracketGenerator", "TournamentBracketGenerator.csproj", "{727946B7-BCBE-4B53-B9D5-77E4F722C7D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentBracketGenerator.Application", "..\TournamentBracketGenerator.Application\TournamentBracketGenerator.Application.csproj", "{E4586C59-5122-4B36-8725-014A1ED253CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{727946B7-BCBE-4B53-B9D5-77E4F722C7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{727946B7-BCBE-4B53-B9D5-77E4F722C7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{727946B7-BCBE-4B53-B9D5-77E4F722C7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{727946B7-BCBE-4B53-B9D5-77E4F722C7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4586C59-5122-4B36-8725-014A1ED253CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4586C59-5122-4B36-8725-014A1ED253CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4586C59-5122-4B36-8725-014A1ED253CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4586C59-5122-4B36-8725-014A1ED253CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
