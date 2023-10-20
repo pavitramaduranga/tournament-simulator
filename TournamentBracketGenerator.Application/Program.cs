@@ -33,7 +33,7 @@ class Tournament
     #endregion
 
     #region Tournament
-    public Team GetTournamentWinner()
+    public Team? GetTournamentWinner()
     {
         return teams.Count == 1 ? teams[0] : null;
     }
@@ -106,6 +106,13 @@ class Tournament
 
         PathToVictory(GetTournamentWinner());
     }
+
+    public void ClearTournamentData()
+    {
+        this.teams.Clear();
+        this.matchEvents.Clear();
+    }
+
     #endregion
 
     #region Grouping stage
@@ -202,8 +209,7 @@ class Program
             Console.WriteLine("1. Simulate Group Stage");
             Console.WriteLine("2. Simulate World cup Tournament");
             Console.WriteLine("3. Simulate NCAA soccer Tournament");
-            Console.WriteLine("4. Show Path to Victory");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("4. Exit");
             if (int.TryParse(Console.ReadLine(), out option))
             {
                 switch (option)
@@ -221,20 +227,14 @@ class Program
                         tournament.SimulateTournament();
                         break;
                     case 4:
-                        Console.WriteLine("Enter the team name to show its path to victory (e.g., Team 3A):");
-                        string teamName = Console.ReadLine();
-                        Team team = tournament.teams.FirstOrDefault(t => t.Name == teamName);
-                        tournament.PathToVictory(team);
-                        break;
-                    case 5:
                         Console.WriteLine("Exiting the program.");
                         break;
                     default:
                         Console.WriteLine("Invalid option. Please select a valid option.");
                         break;
                 }
-                tournament.teams.Clear();
-                tournament.matchEvents.Clear();
+
+                tournament.ClearTournamentData();
             }
             else
             {
