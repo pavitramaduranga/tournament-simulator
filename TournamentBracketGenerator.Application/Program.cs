@@ -32,17 +32,15 @@ class Program
     private static void HandleUserInput(int option)
     {
         TournamentService tournamentService = new TournamentService();
-        //TeamService teamService = new TeamService();
+        GroupStageService groupStageService = new GroupStageService();
 
         switch (option)
         {
             case 1:
-                tournamentService.SeedTeams(32);
-                tournamentService.SimulateGroupStage();
+                groupStageService.SimulateGroupStage(32);
                 break;
             case 2:
-                tournamentService.SeedTeams(16);
-                tournamentService.SimulateTournament();
+                tournamentService.SimulateTournament(16);
                 break;
             case 3:
                 Console.WriteLine("Exiting the program.");
