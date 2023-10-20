@@ -1,7 +1,7 @@
 ﻿namespace TournamentBracketGenerator.Application.Interfaces
 {
-    internal interface ISingleEliminationStageService
+    public interface ISingleEliminationStageService
     {
-        internal void SimulateTournament(int numberOfTeams);
+        public void SimulateTournament(int numberOfTeams);
     }
 }

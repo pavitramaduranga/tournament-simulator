@@ -2,12 +2,12 @@
 
 namespace TournamentBracketGenerator.Application.Services
 {
-    internal class TournamentService
+    public class TournamentService : ITournamentService
     {
         private List<Team> teams = new();
         private List<MatchEvent> matchEvents = new();
 
-        internal void AdvanceTeam(List<Team> topTeams)
+        public void AdvanceTeam(List<Team> topTeams)
         {
             teams = topTeams;
 

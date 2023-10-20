@@ -4,6 +4,6 @@ namespace TournamentBracketGenerator.Application.Interfaces
 {
     public interface ITeamService
     {
-        List<Team> SeedTeams(int numberOfTeams);
+        public List<Team> SeedTeams(int numberOfTeams);
     }
 }

@@ -5,13 +5,18 @@ namespace TournamentBracketGenerator.Application.Services
 {
     public class SingleEliminationStageService: ISingleEliminationStageService
     {
+        private readonly ITeamService _teamService;
+        private readonly ITournamentService _tournamentService;
+
+        public SingleEliminationStageService(ITeamService teamService, ITournamentService tournamentService)
+        {
+            _teamService = teamService;
+            _tournamentService = tournamentService;
+        }
         public void SimulateTournament(int numberOfTeams)
         {
-            TeamService teamService = new TeamService();
-            TournamentService tournamentService = new TournamentService();
-
-            List<Team> teams = teamService.SeedTeams(numberOfTeams);
-            tournamentService.AdvanceTeam(teams);
+            List<Team> teams = _teamService.SeedTeams(numberOfTeams);
+            _tournamentService.AdvanceTeam(teams);
         }
     }
 }

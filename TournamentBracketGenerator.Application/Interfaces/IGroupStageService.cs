@@ -1,7 +1,7 @@
 ﻿namespace TournamentBracketGenerator.Application.Interfaces
 {
-    internal interface IGroupStageService
+    public interface IGroupStageService
     {
-        internal void SimulateTournament(int numberOfTeams);
+        public void SimulateTournament(int numberOfTeams);
     }
 }

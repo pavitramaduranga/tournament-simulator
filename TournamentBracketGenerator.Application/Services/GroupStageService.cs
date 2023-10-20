@@ -5,12 +5,20 @@ namespace TournamentBracketGenerator.Application.Services
 {
     public class GroupStageService : IGroupStageService
     {
+        private readonly ITeamService _teamService;
+        private readonly ITournamentService _tournamentService;
+
+        public GroupStageService(ITeamService teamService, ITournamentService tournamentService)
+        {
+            _teamService = teamService;
+            _tournamentService = tournamentService;
+        }
+
         public void SimulateTournament(int numberOfTeams)
         {
-            TeamService teamService = new TeamService();//
-            TournamentService tournamentService = new TournamentService();//
 
-            List<Team> teams = teamService.SeedTeams(numberOfTeams);
+
+            List<Team> teams = _teamService.SeedTeams(numberOfTeams);
 
             // Break the teams into 4 groups of 4 teams each
             var groups = new List<List<Team>>();
@@ -43,7 +51,7 @@ namespace TournamentBracketGenerator.Application.Services
 
             Console.WriteLine("\nTop Teams from the Group Stage in Single Elimination round ");
 
-            tournamentService.AdvanceTeam(topTeams);
+            _tournamentService.AdvanceTeam(topTeams);
         }
 
         private static List<Team> GetTopTeams(List<Team> group, int topCount)
