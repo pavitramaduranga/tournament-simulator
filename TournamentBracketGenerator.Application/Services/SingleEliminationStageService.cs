@@ -15,8 +15,11 @@ namespace TournamentBracketGenerator.Application.Services
         }
         public void SimulateTournament(int numberOfTeams)
         {
-            List<Team> teams = _teamService.SeedTeams(numberOfTeams);
-            _tournamentService.AdvanceTeam(teams);
+            if (numberOfTeams > 0)
+            {
+                List<Team> teams = _teamService.SeedTeams(numberOfTeams);
+                _tournamentService.AdvanceTeam(teams);
+            }
         }
     }
 }
