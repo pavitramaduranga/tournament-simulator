@@ -50,51 +50,29 @@ class Tournament
         }
     }
 
-    public Team AdvanceTeam(Team team)
-    {
-        if (teams.Contains(team))
-        {
-            if (teams.Count > 1)
-            {
-                // Pair teams for the next round
-                PairTeams();
-            }
-            return GetTournamentWinner();
-        }
-        else
-        {
-            Console.WriteLine("Team not found in the tournament.");
-            return null;
-        }
-    }
-
     public Team GetTournamentWinner()
     {
         return teams.Count == 1 ? teams[0] : null;
     }
 
-    public void PathToVictory()
+    public void PathToVictory(Team team)
     {
+        Console.WriteLine("-------------------------------------------------");
         Console.WriteLine("Tournament Path to Victory:");
-        Team winner = GetTournamentWinner();
-        if (winner != null)
+        if (team != null)
         {
-            List<string> path = new List<string>();
-            path.Add($"{winner.Name} (Seed {winner.Seed}) - Tournament Winner");
+            List<MatchEvent> winnerMatches = matchEvents
+                .Where(match => match.Winner == team.Name)
+                .ToList();
 
-            foreach (MatchEvent matchEvent in matchEvents)
+            foreach (MatchEvent matchEvent in winnerMatches)
             {
-                path.Add($"{matchEvent.Winner} defeated {matchEvent.Loser}");
-            }
-
-            foreach (var step in path)
-            {
-                Console.WriteLine(step);
+                Console.WriteLine($"{matchEvent.Winner} defeated {matchEvent.Loser}");
             }
         }
     }
 
-    public void SimulateMatch(Team team1, Team team2)
+    public Team SimulateMatch(Team team1, Team team2)
     {
         Random random = new Random();
         if (random.Next(2) == 0)
@@ -102,12 +80,14 @@ class Tournament
             Console.WriteLine($"{team1.Name} vs {team2.Name} - {team1.Name} wins");
             matchEvents.Add(new MatchEvent(team1.Name, team2.Name));
             teams.Remove(team2);
+            return team1;
         }
         else
         {
             Console.WriteLine($"{team1.Name} vs {team2.Name} - {team2.Name} wins");
             matchEvents.Add(new MatchEvent(team2.Name, team1.Name));
             teams.Remove(team1);
+            return team2;
         }
     }
 
@@ -133,7 +113,10 @@ class Program
     {
         Tournament tournament = new Tournament();
 
-        int numberOfTeams = 16;
+        int numberOfTeams = 64;
+
+        Console.WriteLine("Tournament Dashboard");
+
         tournament.SeedTeams(numberOfTeams);
 
         while (tournament.teams.Count != 1)
@@ -147,17 +130,7 @@ class Program
             }
         }
 
-        if (tournament.teams.Count == 1)
-        {
-            Team team1 = tournament.teams[0];
-            Team team2 = tournament.teams[0].NextRoundOpponent;
-            Console.WriteLine($"Final Match: {team1.Name} vs {team2.Name}");
-            tournament.SimulateMatch(team1, team2);
-        }
+        tournament.PathToVictory(tournament.GetTournamentWinner());
 
-        tournament.PathToVictory();
-
-        Team winner = tournament.GetTournamentWinner();
-        Console.WriteLine($"Tournament Winner: {winner.Name} (Seed {winner.Seed})");
     }
 }
