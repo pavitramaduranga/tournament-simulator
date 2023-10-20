@@ -25,7 +25,6 @@ namespace TournamentBracketGenerator.Application.Services
 
         private void PathToVictory(Team team)
         {
-            Console.WriteLine("-------------------------------------------------");
             Console.WriteLine("Tournament Path to Victory:");
             if (team != null)
             {

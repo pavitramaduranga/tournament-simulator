@@ -16,8 +16,6 @@ namespace TournamentBracketGenerator.Application.Services
 
         public void SimulateTournament(int numberOfTeams)
         {
-
-
             List<Team> teams = _teamService.SeedTeams(numberOfTeams);
 
             // Break the teams into 4 groups of 4 teams each
@@ -43,7 +41,7 @@ namespace TournamentBracketGenerator.Application.Services
                 topTeams.AddRange(groupTopTeams);
             }
 
-            Console.WriteLine("\nTop Teams from the Group Stage:");
+            Console.WriteLine("\nTop Teams from the Group Stage Round:");
             foreach (var team in topTeams)
             {
                 Console.WriteLine($"{team.Name} (Seed {team.Seed})");
