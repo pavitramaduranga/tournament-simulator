@@ -22,6 +22,14 @@ namespace TournamentBracketGenerator.Application.Services
 
         public Team? GetTournamentWinner() => teams.Count == 1 ? teams[0] : null;
 
+        public List<MatchEvent> GetWinnerMatches(Team winningTeam)
+        {
+            return this.matchRounds
+                .SelectMany(round => round.MatchEvents)
+                .Where(match => match.Winner == winningTeam?.Name)
+                .ToList();
+        }
+
         private MatchEvent SimulateMatch(Team team1, Team team2)
         {
             Random random = new Random();

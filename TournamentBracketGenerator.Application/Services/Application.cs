@@ -38,7 +38,7 @@ namespace TournamentBracketGenerator.Application.Services
 
         private static void DisplayMenu()
         {
-            Console.WriteLine("Select an option:");
+            Console.WriteLine("\nSelect an option:");
             Console.WriteLine("1. Simulate World Cup Tournament");
             Console.WriteLine("2. Simulate Group Stage");
             Console.WriteLine("3. Exit");
@@ -99,10 +99,7 @@ namespace TournamentBracketGenerator.Application.Services
                 Console.WriteLine("\nWinner of the Tournament is " + winningTeam?.Name);
                 Console.WriteLine("\nTournament Path to Victory:");
 
-                List<MatchEvent> winnerMatches = _tournamentService.matchRounds
-                    .SelectMany(round => round.MatchEvents)
-                    .Where(match => match.Winner == winningTeam?.Name)
-                    .ToList();
+                List<MatchEvent> winnerMatches = _tournamentService.GetWinnerMatches(winningTeam);
 
                 foreach (MatchEvent matchEvent in winnerMatches)
                 {
