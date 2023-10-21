@@ -47,7 +47,7 @@ namespace TournamentBracketGenerator.Application.Services
                 Console.WriteLine($"{team.Name} (Seed {team.Seed})");
             }
 
-            Console.WriteLine("\nTop Teams from the Group Stage in Single Elimination round");
+            Console.WriteLine("\nMatches in Single Elimination round for the top teams from the Group Stage");
 
             _tournamentService.AdvanceTeam(topTeams);
         }

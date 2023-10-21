@@ -47,7 +47,7 @@ namespace TournamentBracketGenerator.UnitTests
 
             // Assert
             string capturedOutput = _outputCapture.ToString();
-            StringAssert.Contains("Top Teams from the Group Stage in Single Elimination round", capturedOutput);
+            StringAssert.Contains("Matches in Single Elimination round for the top teams from the Group Stage", capturedOutput);
             StringAssert.Contains("(Seed", capturedOutput);
         }
 

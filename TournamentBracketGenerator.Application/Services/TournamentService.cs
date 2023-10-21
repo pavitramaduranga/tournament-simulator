@@ -10,9 +10,11 @@ namespace TournamentBracketGenerator.Application.Services
         public void AdvanceTeam(List<Team> topTeams)
         {
             teams = topTeams;
-
+            int round = 0;
             while (teams.Count != 1)
             {
+                round++;
+                Console.WriteLine("Round " + round);
                 PairTeams();
                 SimulateMatches();
             }
@@ -25,7 +27,7 @@ namespace TournamentBracketGenerator.Application.Services
 
         private void PathToVictory(Team team)
         {
-            Console.WriteLine("Tournament Path to Victory:");
+            Console.WriteLine("\nTournament Path to Victory:");
             if (team != null)
             {
                 List<MatchEvent> winnerMatches = matchEvents
