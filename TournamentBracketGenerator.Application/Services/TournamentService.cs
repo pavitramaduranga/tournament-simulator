@@ -1,18 +1,11 @@
-﻿using TournamentBracketGenerator.Application.Interfaces;
-using TournamentBracketGenerator.Application.Models;
+﻿using TournamentBracketGenerator.Application.Models;
 
 namespace TournamentBracketGenerator.Application.Services
 {
     public class TournamentService : ITournamentService
     {
-        private List<Team> teams = new();
-        private List<MatchEvent> matchEvents = new();
-        private readonly ILogService _logService;
-
-        public TournamentService(ILogService logService)
-        {
-            _logService = logService;
-        }
+        public List<MatchRound> matchRounds { get; set; } = new List<MatchRound>();
+        public List<Team> teams { get; set; } = new List<Team>();
 
         public void AdvanceTeam(List<Team> topTeams)
         {
@@ -21,42 +14,23 @@ namespace TournamentBracketGenerator.Application.Services
             while (teams.Count != 1)
             {
                 round++;
-                _logService.Write("Round " + round);
                 PairTeams();
-                SimulateMatches();
-            }
-
-            PathToVictory(GetTournamentWinner());
-            ClearTournamentData();
-        }
-
-        private Team? GetTournamentWinner() => teams.Count == 1 ? teams[0] : null;
-
-        private void PathToVictory(Team team)
-        {
-            _logService.Write("\nTournament Path to Victory:");
-            if (team != null)
-            {
-                List<MatchEvent> winnerMatches = matchEvents
-                    .Where(match => match.Winner == team.Name)
-                    .ToList();
-
-                foreach (MatchEvent matchEvent in winnerMatches)
-                {
-                    Console.WriteLine($"{matchEvent.Winner} defeated {matchEvent.Loser}");
-                }
+                var matchRound = SimulateMatches(round);
+                matchRounds.Add(matchRound);
             }
         }
 
-        private void SimulateMatch(Team team1, Team team2)
+        public Team? GetTournamentWinner() => teams.Count == 1 ? teams[0] : null;
+
+        private MatchEvent SimulateMatch(Team team1, Team team2)
         {
             Random random = new Random();
             Team winner = random.Next(2) == 0 ? team1 : team2;
             Team loser = winner == team1 ? team2 : team1;
-
-            _logService.Write($"{team1.Name} vs {team2.Name} - {winner.Name} wins");
-            matchEvents.Add(new MatchEvent(winner.Name, loser.Name));
+            MatchEvent matchEvent = new(winner.Name, loser.Name);
             teams.Remove(loser);
+
+            return matchEvent;
         }
 
         private void PairTeams()
@@ -76,20 +50,24 @@ namespace TournamentBracketGenerator.Application.Services
             teams = teams.OrderBy(team => team.Seed).ToList(); // Ensure teams are ordered by seed
         }
 
-        private void SimulateMatches()
+        private MatchRound SimulateMatches(int round)
         {
             var teamList = teams.ToList();
+
+            MatchRound matchRound = new MatchRound
+            {
+                Round = round,
+                Type = "SingleElimination",
+                MatchEvents = new List<MatchEvent>()
+            };
+
             for (int i = 0; i < teamList.Count / 2; i++)
             {
                 var team = teamList[i];
-                SimulateMatch(team, team.NextRoundOpponent);
+                MatchEvent matchEvent = SimulateMatch(team, team.NextRoundOpponent);
+                matchRound.MatchEvents.Add(matchEvent);
             }
-        }
-
-        private void ClearTournamentData()
-        {
-            teams.Clear();
-            matchEvents.Clear();
+            return matchRound;
         }
 
     }

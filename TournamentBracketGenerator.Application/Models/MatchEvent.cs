@@ -1,6 +1,6 @@
 ﻿namespace TournamentBracketGenerator.Application.Models
 {
-    class MatchEvent
+    public class MatchEvent
     {
         public string Winner { get; set; }
         public string Loser { get; set; }

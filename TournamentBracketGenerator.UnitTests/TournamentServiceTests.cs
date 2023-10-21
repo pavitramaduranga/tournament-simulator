@@ -1,6 +1,4 @@
-﻿using Moq;
-using TournamentBracketGenerator.Application.Interfaces;
-using TournamentBracketGenerator.Application.Models;
+﻿using TournamentBracketGenerator.Application.Models;
 using TournamentBracketGenerator.Application.Services;
 
 namespace TournamentBracketGenerator.UnitTests
@@ -10,15 +8,13 @@ namespace TournamentBracketGenerator.UnitTests
     {
 
         private TournamentService _tournamentService;
-        private Mock<ILogService> _logServiceMock;
         private StringWriter _outputCapture;
         private TextWriter _originalOutput;
 
         [SetUp]
         public void SetUp()
         {
-            _logServiceMock = new Mock<ILogService>();
-            _tournamentService = new TournamentService(_logServiceMock.Object);
+            _tournamentService = new TournamentService();
 
             _originalOutput = Console.Out;
             _outputCapture = new StringWriter();

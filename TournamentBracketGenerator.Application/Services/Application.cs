@@ -1,4 +1,5 @@
 ﻿using TournamentBracketGenerator.Application.Interfaces;
+using TournamentBracketGenerator.Application.Models;
 using TournamentBracketGenerator.Application.TournamentFactory;
 
 namespace TournamentBracketGenerator.Application.Services
@@ -7,11 +8,13 @@ namespace TournamentBracketGenerator.Application.Services
     {
         private readonly ISingleEliminationStageService _singleEliminationStageService;
         private readonly IGroupStageService _groupStageService;
+        private readonly ITournamentService _tournamentService;
 
-        public Application(ISingleEliminationStageService singleEliminationStageService, IGroupStageService groupStageService)
+        public Application(ISingleEliminationStageService singleEliminationStageService, IGroupStageService groupStageService, ITournamentService tournamentService)
         {
             _singleEliminationStageService = singleEliminationStageService;
             _groupStageService = groupStageService;
+            _tournamentService = tournamentService;
         }
 
         public void Main()
@@ -64,11 +67,50 @@ namespace TournamentBracketGenerator.Application.Services
             }
 
             gameApproach?.SimulateTournament(numberOfTeams);
+            PrintMatchList();
+            PathToVictory();
+        }
+
+        private void PrintMatchList()
+        {
+            if (_tournamentService != null)
+            {
+                foreach (var matchRound in _tournamentService.matchRounds)
+                {
+                    Console.WriteLine($"Round {matchRound.Round}");
+                    foreach (var matchEvent in matchRound.MatchEvents)
+                    {
+                        Console.WriteLine($"{matchEvent.Winner} vs {matchEvent.Loser} - {matchEvent.Winner} wins");
+                    }
+                }
+            }
         }
 
         private TournamentFactory.TournamentFactory CreateTournamentFactory()
         {
             return new ConcreteTournamentFactory(_singleEliminationStageService, _groupStageService);
+        }
+
+        private void PathToVictory()
+        {
+            if (_tournamentService != null)
+            {
+                Team? winningTeam = _tournamentService.GetTournamentWinner();
+                Console.WriteLine("\nWinner of the Tournament is " + winningTeam?.Name);
+                Console.WriteLine("\nTournament Path to Victory:");
+
+                List<MatchEvent> winnerMatches = _tournamentService.matchRounds
+                    .SelectMany(round => round.MatchEvents)
+                    .Where(match => match.Winner == winningTeam?.Name)
+                    .ToList();
+
+                foreach (MatchEvent matchEvent in winnerMatches)
+                {
+                    Console.WriteLine($"{matchEvent.Winner} defeated {matchEvent.Loser}");
+                }
+                _tournamentService.matchRounds.Clear();
+                _tournamentService.teams.Clear();
+            }
         }
     }
 }
