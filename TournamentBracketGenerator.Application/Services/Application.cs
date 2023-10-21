@@ -1,4 +1,5 @@
 ﻿using TournamentBracketGenerator.Application.Interfaces;
+using TournamentBracketGenerator.Application.TournamentFactory;
 
 namespace TournamentBracketGenerator.Application.Services
 {
@@ -35,28 +36,39 @@ namespace TournamentBracketGenerator.Application.Services
         private static void DisplayMenu()
         {
             Console.WriteLine("Select an option:");
-            Console.WriteLine("1. Simulate Group Stage");
-            Console.WriteLine("2. Simulate World Cup Tournament");
+            Console.WriteLine("1. Simulate World Cup Tournament");
+            Console.WriteLine("2. Simulate Group Stage");
             Console.WriteLine("3. Exit");
         }
 
         private void HandleUserInput(int option)
         {
+            ITournamentFactory? gameApproach = null;
+            int numberOfTeams = 0;
             switch (option)
             {
                 case 1:
-                    _groupStageService.SimulateTournament(32);
+                    gameApproach = CreateTournamentFactory().GetGameMethodFactory("SingleElimination");
+                    numberOfTeams = 16;
                     break;
                 case 2:
-                    _singleEliminationStageService.SimulateTournament(16);
+                    gameApproach = CreateTournamentFactory().GetGameMethodFactory("GroupStage");
+                    numberOfTeams = 64;
                     break;
                 case 3:
-                    Console.WriteLine("Exiting the program.");
+                    Console.WriteLine("Exiting application.");
                     break;
                 default:
                     Console.WriteLine("Invalid option. Please select a valid option.");
                     break;
             }
+        
+            gameApproach?.SimulateTournament(numberOfTeams);
+        }
+
+        private TournamentFactory.TournamentFactory CreateTournamentFactory()
+        {
+            return new ConcreteTournamentFactory(_singleEliminationStageService, _groupStageService);
         }
     }
 }
