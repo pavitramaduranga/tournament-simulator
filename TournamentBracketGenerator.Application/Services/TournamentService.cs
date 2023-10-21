@@ -1,4 +1,5 @@
-﻿using TournamentBracketGenerator.Application.Models;
+﻿using TournamentBracketGenerator.Application.Interfaces;
+using TournamentBracketGenerator.Application.Models;
 
 namespace TournamentBracketGenerator.Application.Services
 {
@@ -6,6 +7,12 @@ namespace TournamentBracketGenerator.Application.Services
     {
         private List<Team> teams = new();
         private List<MatchEvent> matchEvents = new();
+        private readonly ILogService _logService;
+
+        public TournamentService(ILogService logService)
+        {
+            _logService = logService;
+        }
 
         public void AdvanceTeam(List<Team> topTeams)
         {
@@ -14,7 +21,7 @@ namespace TournamentBracketGenerator.Application.Services
             while (teams.Count != 1)
             {
                 round++;
-                Console.WriteLine("Round " + round);
+                _logService.Write("Round " + round);
                 PairTeams();
                 SimulateMatches();
             }
@@ -27,7 +34,7 @@ namespace TournamentBracketGenerator.Application.Services
 
         private void PathToVictory(Team team)
         {
-            Console.WriteLine("\nTournament Path to Victory:");
+            _logService.Write("\nTournament Path to Victory:");
             if (team != null)
             {
                 List<MatchEvent> winnerMatches = matchEvents
@@ -47,7 +54,7 @@ namespace TournamentBracketGenerator.Application.Services
             Team winner = random.Next(2) == 0 ? team1 : team2;
             Team loser = winner == team1 ? team2 : team1;
 
-            Console.WriteLine($"{team1.Name} vs {team2.Name} - {winner.Name} wins");
+            _logService.Write($"{team1.Name} vs {team2.Name} - {winner.Name} wins");
             matchEvents.Add(new MatchEvent(winner.Name, loser.Name));
             teams.Remove(loser);
         }

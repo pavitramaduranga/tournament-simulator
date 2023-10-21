@@ -7,11 +7,13 @@ namespace TournamentBracketGenerator.Application.Services
     {
         private readonly ITeamService _teamService;
         private readonly ITournamentService _tournamentService;
+        private readonly ILogService _logService;
 
-        public GroupStageService(ITeamService teamService, ITournamentService tournamentService)
+        public GroupStageService(ITeamService teamService, ITournamentService tournamentService, ILogService logService)
         {
             _teamService = teamService;
             _tournamentService = tournamentService;
+            _logService = logService;
         }
 
         public void SimulateTournament(int numberOfTeams)
@@ -20,29 +22,29 @@ namespace TournamentBracketGenerator.Application.Services
 
             List<List<Team>> groups = BreakIntoTeams(teams);
 
-            Console.WriteLine("\nTournament Group Stage");
+            _logService.Write("\nTournament Group Stage");
 
             // Simulate group matches and get the top 2 teams from each group
             List<Team> topTeams = new List<Team>();
             foreach (var group in groups)
             {
-                Console.WriteLine("\nGroup Teams :");
+                _logService.Write("\nGroup Teams :");
                 foreach (var team in group)
                 {
-                    Console.WriteLine(team.Name);
+                    _logService.Write(team.Name);
                 }
 
                 List<Team> groupTopTeams = GetTopTeams(group, 2);
                 topTeams.AddRange(groupTopTeams);
             }
 
-            Console.WriteLine("\nTop Teams from the Group Stage Round:");
+            _logService.Write("\nTop Teams from the Group Stage Round:");
             foreach (var team in topTeams)
             {
-                Console.WriteLine($"{team.Name} (Seed {team.Seed})");
+                _logService.Write($"{team.Name} (Seed {team.Seed})");
             }
 
-            Console.WriteLine("\nMatches in Single Elimination round for the top teams from the Group Stage");
+            _logService.Write("\nMatches in Single Elimination round for the top teams from the Group Stage");
 
             _tournamentService.AdvanceTeam(topTeams);
         }

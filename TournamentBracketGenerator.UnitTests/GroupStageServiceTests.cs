@@ -11,6 +11,7 @@ namespace TournamentBracketGenerator.UnitTests
         private GroupStageService _groupStageService;
         private Mock<ITeamService> _teamServiceMock;
         private Mock<ITournamentService> _tournamentServiceMock;
+        private Mock<ILogService> _logServiceMock;
         private StringWriter _outputCapture;
         private TextWriter _originalOutput;
 
@@ -19,12 +20,13 @@ namespace TournamentBracketGenerator.UnitTests
         {
             _teamServiceMock = new Mock<ITeamService>();
             _tournamentServiceMock = new Mock<ITournamentService>();
+            _logServiceMock = new Mock<ILogService>();
 
             _originalOutput = Console.Out;
             _outputCapture = new StringWriter();
             Console.SetOut(_outputCapture);
 
-            _groupStageService = new GroupStageService(_teamServiceMock.Object, _tournamentServiceMock.Object);
+            _groupStageService = new GroupStageService(_teamServiceMock.Object, _tournamentServiceMock.Object, _logServiceMock.Object);
         }
 
         [TearDown]
