@@ -18,12 +18,7 @@ namespace TournamentBracketGenerator.Application.Services
         {
             List<Team> teams = _teamService.SeedTeams(numberOfTeams);
 
-            // Break the teams into 4 groups of 4 teams each
-            var groups = new List<List<Team>>();
-            for (int i = 0; i < teams.Count; i += 4)
-            {
-                groups.Add(teams.Skip(i).Take(4).ToList());
-            }
+            List<List<Team>> groups = BreakIntoTeams(teams);
 
             Console.WriteLine("\nTournament Group Stage");
 
@@ -50,6 +45,17 @@ namespace TournamentBracketGenerator.Application.Services
             Console.WriteLine("\nMatches in Single Elimination round for the top teams from the Group Stage");
 
             _tournamentService.AdvanceTeam(topTeams);
+        }
+
+        private static List<List<Team>> BreakIntoTeams(List<Team> teams)
+        {
+            var groups = new List<List<Team>>();
+            for (int i = 0; i < teams.Count; i += 4)
+            {
+                groups.Add(teams.Skip(i).Take(4).ToList());
+            }
+
+            return groups;
         }
 
         private static List<Team> GetTopTeams(List<Team> group, int topCount)

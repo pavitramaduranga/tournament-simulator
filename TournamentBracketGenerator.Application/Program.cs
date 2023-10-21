@@ -7,6 +7,7 @@ IHost _host = Host.CreateDefaultBuilder().ConfigureServices(
     services =>
     {
         services.AddSingleton<IApplication, Application>();
+        services.AddScoped<ILogService, LogService>();
         services.AddScoped<ITeamService, TeamService>();
         services.AddScoped<ITournamentService, TournamentService>();
         services.AddScoped<ISingleEliminationStageService, SingleEliminationStageService>();

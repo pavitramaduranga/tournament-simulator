@@ -62,7 +62,7 @@ namespace TournamentBracketGenerator.Application.Services
                     Console.WriteLine("Invalid option. Please select a valid option.");
                     break;
             }
-        
+
             gameApproach?.SimulateTournament(numberOfTeams);
         }
 
