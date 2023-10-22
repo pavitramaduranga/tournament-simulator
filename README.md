@@ -12,3 +12,7 @@ World Cup tournament simulator
 # Known Issues
 
 The JSON given with the assignment has 16 countries, which is insufficient considering the 64 team brackets and the grouping stage. Therefore I have used a method to generate team names.
+
+# Class Diagram
+
+![image](https://github.com/pavitramaduranga/tournament-simulator/assets/4363523/bbace911-fb5d-4bef-a712-3cc16c17a3ac)
