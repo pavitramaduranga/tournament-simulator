@@ -92,12 +92,11 @@ namespace TournamentBracketGenerator.Application.Services
             if (_tournamentService != null)
             {
                 Console.WriteLine("Match Results:");
+                Console.WriteLine("{0,-15} {1,-15} {2,-15}", "Winner", "Loser", "Result");
 
                 foreach (var matchRound in _tournamentService.matchRounds)
                 {
                     Console.WriteLine($"Round {matchRound.Round}");
-
-                    Console.WriteLine("{0,-15} {1,-15} {2,-15}", "Winner", "Loser", "Result");
 
                     foreach (var matchEvent in matchRound.MatchEvents)
                     {
