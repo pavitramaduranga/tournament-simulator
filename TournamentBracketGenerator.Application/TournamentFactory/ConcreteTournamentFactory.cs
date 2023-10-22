@@ -2,7 +2,7 @@
 
 namespace TournamentBracketGenerator.Application.TournamentFactory
 {
-    internal class ConcreteTournamentFactory : TournamentFactory
+    public class ConcreteTournamentFactory : TournamentFactory
     {
 
         private readonly ISingleEliminationStageService _singleEliminationStageService;

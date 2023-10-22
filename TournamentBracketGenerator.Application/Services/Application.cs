@@ -1,9 +1,11 @@
-﻿using TournamentBracketGenerator.Application.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+using TournamentBracketGenerator.Application.Interfaces;
 using TournamentBracketGenerator.Application.Models;
 using TournamentBracketGenerator.Application.TournamentFactory;
 
 namespace TournamentBracketGenerator.Application.Services
 {
+    [ExcludeFromCodeCoverage]
     public class Application : IApplication
     {
         private readonly ISingleEliminationStageService _singleEliminationStageService;
@@ -34,6 +36,11 @@ namespace TournamentBracketGenerator.Application.Services
                     Console.WriteLine("Invalid input. Please enter a valid option.");
                 }
             }
+        }
+
+        private TournamentFactory.TournamentFactory CreateTournamentFactory()
+        {
+            return new ConcreteTournamentFactory(_singleEliminationStageService, _groupStageService);
         }
 
         private static void DisplayMenu()
@@ -84,11 +91,6 @@ namespace TournamentBracketGenerator.Application.Services
                     }
                 }
             }
-        }
-
-        private TournamentFactory.TournamentFactory CreateTournamentFactory()
-        {
-            return new ConcreteTournamentFactory(_singleEliminationStageService, _groupStageService);
         }
 
         private void PathToVictory()
