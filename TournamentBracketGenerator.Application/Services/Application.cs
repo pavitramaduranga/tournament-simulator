@@ -84,7 +84,6 @@ namespace TournamentBracketGenerator.Application.Services
                 PrintMatchList();
                 PathToVictory();
             }
-
         }
 
         private void PrintMatchList()
@@ -94,7 +93,7 @@ namespace TournamentBracketGenerator.Application.Services
                 Console.WriteLine("Match Results:");
                 Console.WriteLine("{0,-15} {1,-15} {2,-15}", "Winner", "Loser", "Result");
 
-                foreach (var matchRound in _tournamentService.matchRounds)
+                foreach (var matchRound in _tournamentService.MatchRounds)
                 {
                     Console.WriteLine($"Round {matchRound.Round}");
 
@@ -129,8 +128,8 @@ namespace TournamentBracketGenerator.Application.Services
 
                     Console.WriteLine("{0,-15} {1,-15}", winner, defeated);
                 }
-                _tournamentService.matchRounds.Clear();
-                _tournamentService.teams.Clear();
+                _tournamentService.MatchRounds.Clear();
+                _tournamentService.Teams.Clear();
             }
         }
     }

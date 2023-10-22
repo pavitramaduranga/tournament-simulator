@@ -23,9 +23,22 @@ namespace TournamentBracketGenerator.Application.Services
             List<List<Team>> groups = BreakIntoTeams(teams);
 
             _logService.Write("\nTournament Group Stage");
+            List<Team> topTeams = SimulateGroupMatchesToGetTopTeamsFromEachGroup(groups);
 
-            // Simulate group matches and get the top 2 teams from each group
-            List<Team> topTeams = new List<Team>();
+            _logService.Write("\nTop Teams from the Group Stage Round:");
+            foreach (var team in topTeams)
+            {
+                _logService.Write($"{team.Name} (Seed {team.Seed})");
+            }
+
+            _logService.Write("\nMatches in Single Elimination round for the top teams from the Group Stage");
+
+            _tournamentService.AdvanceTeam(topTeams);
+        }
+
+        private List<Team> SimulateGroupMatchesToGetTopTeamsFromEachGroup(List<List<Team>> groups)
+        {
+            List<Team> topTeams = new();
             foreach (var group in groups)
             {
                 _logService.Write("\nGroup Teams :");
@@ -38,15 +51,7 @@ namespace TournamentBracketGenerator.Application.Services
                 topTeams.AddRange(groupTopTeams);
             }
 
-            _logService.Write("\nTop Teams from the Group Stage Round:");
-            foreach (var team in topTeams)
-            {
-                _logService.Write($"{team.Name} (Seed {team.Seed})");
-            }
-
-            _logService.Write("\nMatches in Single Elimination round for the top teams from the Group Stage");
-
-            _tournamentService.AdvanceTeam(topTeams);
+            return topTeams;
         }
 
         private static List<List<Team>> BreakIntoTeams(List<Team> teams)
@@ -62,7 +67,7 @@ namespace TournamentBracketGenerator.Application.Services
 
         private static List<Team> GetTopTeams(List<Team> group, int topCount)
         {
-            Dictionary<Team, int> pointsDictionary = new Dictionary<Team, int>();
+            Dictionary<Team, int> pointsDictionary = new();
 
             foreach (Team team in group)
             {

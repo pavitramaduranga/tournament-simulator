@@ -2,6 +2,7 @@
 using TournamentBracketGenerator.Application.Interfaces;
 using TournamentBracketGenerator.Application.Models;
 using TournamentBracketGenerator.Application.Services;
+using TournamentBracketGenerator.UnitTests.TestHelper;
 
 namespace TournamentBracketGenerator.UnitTests
 {
@@ -21,29 +22,12 @@ namespace TournamentBracketGenerator.UnitTests
             _singleEliminationService = new SingleEliminationStageService(_teamServiceMock.Object, _tournamentServiceMock.Object);
         }
 
-        //[Test]
-        //public void SimulateTournament_Should_Add_Correct_Console_Lines()
-        //{
-        //    // Arrange
-        //    int numberOfTeams = 16;
-        //    List<Team> seededTeams = CreateSampleTeams(numberOfTeams);
-        //    _teamServiceMock.Setup(ts => ts.SeedTeams(numberOfTeams)).Returns(seededTeams);
-
-        //    // Act
-        //    _singleEliminationService.SimulateTournament(numberOfTeams);
-
-        //    // Assert
-        //    string capturedOutput = _outputCapture.ToString();
-        //    StringAssert.Contains("Tournament Path to Victory", capturedOutput);
-        //    StringAssert.Contains("defeated", capturedOutput);
-        //}
-
         [Test]
         public void SimulateTournament_Should_Seed_Teams_And_Advance()
         {
             // Arrange
             int numberOfTeams = 16;
-            List<Team> seededTeams = CreateSampleTeams(numberOfTeams);
+            List<Team> seededTeams = TeamsHelper.CreateSampleTeams(numberOfTeams); ;
             _teamServiceMock.Setup(ts => ts.SeedTeams(numberOfTeams)).Returns(seededTeams);
 
             // Act
@@ -80,16 +64,5 @@ namespace TournamentBracketGenerator.UnitTests
             _teamServiceMock.Verify(ts => ts.SeedTeams(numberOfTeams), Times.Never);
             _tournamentServiceMock.Verify(ts => ts.AdvanceTeam(It.IsAny<List<Team>>()), Times.Never);
         }
-
-        private List<Team> CreateSampleTeams(int numberOfTeams)
-        {
-            var teams = new List<Team>();
-            for (int i = 1; i <= numberOfTeams; i++)
-            {
-                teams.Add(new Team { Name = $"Team {i}", Seed = i });
-            }
-            return teams;
-        }
-
     }
 }

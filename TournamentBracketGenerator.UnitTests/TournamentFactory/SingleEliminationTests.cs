@@ -11,7 +11,7 @@ namespace TournamentBracketGenerator.UnitTests.TournamentFactory
         public void SimulateTournament_CallsSingleEliminationStageService()
         {
             // Arrange
-            int numberOfTeams = 16; // Adjust as needed
+            int numberOfTeams = 16;
             var singleEliminationStageServiceMock = new Mock<ISingleEliminationStageService>();
             var singleElimination = new SingleElimination(singleEliminationStageServiceMock.Object);
 

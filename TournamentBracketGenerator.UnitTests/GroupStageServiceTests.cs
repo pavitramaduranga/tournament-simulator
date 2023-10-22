@@ -2,6 +2,7 @@
 using TournamentBracketGenerator.Application.Interfaces;
 using TournamentBracketGenerator.Application.Models;
 using TournamentBracketGenerator.Application.Services;
+using TournamentBracketGenerator.UnitTests.TestHelper;
 
 namespace TournamentBracketGenerator.UnitTests
 {
@@ -12,8 +13,6 @@ namespace TournamentBracketGenerator.UnitTests
         private Mock<ITeamService> _teamServiceMock;
         private Mock<ITournamentService> _tournamentServiceMock;
         private Mock<ILogService> _logServiceMock;
-        private StringWriter _outputCapture;
-        private TextWriter _originalOutput;
 
         [SetUp]
         public void SetUp()
@@ -21,19 +20,7 @@ namespace TournamentBracketGenerator.UnitTests
             _teamServiceMock = new Mock<ITeamService>();
             _tournamentServiceMock = new Mock<ITournamentService>();
             _logServiceMock = new Mock<ILogService>();
-
-            _originalOutput = Console.Out;
-            _outputCapture = new StringWriter();
-            Console.SetOut(_outputCapture);
-
             _groupStageService = new GroupStageService(_teamServiceMock.Object, _tournamentServiceMock.Object, _logServiceMock.Object);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            Console.SetOut(_originalOutput);
-            _outputCapture.Dispose();
         }
 
         [Test]
@@ -41,7 +28,7 @@ namespace TournamentBracketGenerator.UnitTests
         {
             // Arrange
             int numberOfTeams = 16;
-            List<Team> seededTeams = CreateSampleTeams(numberOfTeams);
+            List<Team> seededTeams = TeamsHelper.CreateSampleTeams(numberOfTeams);
             _teamServiceMock.Setup(ts => ts.SeedTeams(numberOfTeams)).Returns(seededTeams);
 
             // Act
@@ -53,16 +40,6 @@ namespace TournamentBracketGenerator.UnitTests
 
             // Verify that the AdvanceTeam method of the tournament service was called.
             _tournamentServiceMock.Verify(ts => ts.AdvanceTeam(It.IsAny<List<Team>>()), Times.Once);
-        }
-
-        private List<Team> CreateSampleTeams(int numberOfTeams)
-        {
-            var teams = new List<Team>();
-            for (int i = 1; i <= numberOfTeams; i++)
-            {
-                teams.Add(new Team { Name = $"Team {i}", Seed = i });
-            }
-            return teams;
         }
     }
 }

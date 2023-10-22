@@ -11,7 +11,7 @@ namespace TournamentBracketGenerator.UnitTests
         {
             // Arrange
             var teamService = new TeamService();
-            int numberOfTeams = 16; // You can set the desired number of teams
+            int numberOfTeams = 16;
 
             // Act
             List<Team> teams = teamService.SeedTeams(numberOfTeams);
@@ -27,7 +27,7 @@ namespace TournamentBracketGenerator.UnitTests
 
             // Arrange
             var teamService = new TeamService();
-            int numberOfTeams = 16; // You can set the desired number of teams
+            int numberOfTeams = 16;
 
             // Act
             List<Team> teams = teamService.SeedTeams(numberOfTeams);

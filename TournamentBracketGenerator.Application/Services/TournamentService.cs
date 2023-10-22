@@ -4,27 +4,27 @@ namespace TournamentBracketGenerator.Application.Services
 {
     public class TournamentService : ITournamentService
     {
-        public List<MatchRound> matchRounds { get; set; } = new List<MatchRound>();
-        public List<Team> teams { get; set; } = new List<Team>();
+        public List<MatchRound> MatchRounds { get; set; } = new List<MatchRound>();
+        public List<Team> Teams { get; set; } = new List<Team>();
 
         public void AdvanceTeam(List<Team> topTeams)
         {
-            teams = topTeams;
+            Teams = topTeams;
             int round = 0;
-            while (teams.Count != 1)
+            while (Teams.Count != 1)
             {
                 round++;
                 PairTeams();
                 var matchRound = SimulateMatches(round);
-                matchRounds.Add(matchRound);
+                MatchRounds.Add(matchRound);
             }
         }
 
-        public Team? GetTournamentWinner() => teams.Count == 1 ? teams[0] : null;
+        public Team? GetTournamentWinner() => Teams.Count == 1 ? Teams[0] : null;
 
         public List<MatchEvent> GetWinnerMatches(Team winningTeam)
         {
-            return this.matchRounds
+            return this.MatchRounds
                 .SelectMany(round => round.MatchEvents)
                 .Where(match => match.Winner == winningTeam?.Name)
                 .ToList();
@@ -32,37 +32,41 @@ namespace TournamentBracketGenerator.Application.Services
 
         private MatchEvent SimulateMatch(Team team1, Team team2)
         {
-            Random random = new Random();
+            Random random = new();
             Team winner = random.Next(2) == 0 ? team1 : team2;
             Team loser = winner == team1 ? team2 : team1;
             MatchEvent matchEvent = new(winner.Name, loser.Name);
-            teams.Remove(loser);
+            Teams.Remove(loser);
 
             return matchEvent;
         }
 
         private void PairTeams()
         {
-            int totalTeams = teams.Count;
+            int totalTeams = Teams.Count;
             int halfTotalTeams = totalTeams / 2;
 
             for (int i = 0; i < halfTotalTeams; i++)
             {
-                Team team1 = teams[i];
-                Team team2 = teams[totalTeams - i - 1];
+                Team team1 = Teams[i];
+                Team team2 = Teams[totalTeams - i - 1];
 
                 team1.NextRoundOpponent = team2;
                 team2.NextRoundOpponent = team1;
             }
+            OrderTeamsBySeed();
+        }
 
-            teams = teams.OrderBy(team => team.Seed).ToList(); // Ensure teams are ordered by seed
+        private void OrderTeamsBySeed()
+        {
+            Teams = Teams.OrderBy(team => team.Seed).ToList();
         }
 
         private MatchRound SimulateMatches(int round)
         {
-            var teamList = teams.ToList();
+            var teamList = Teams.ToList();
 
-            MatchRound matchRound = new MatchRound
+            MatchRound matchRound = new()
             {
                 Round = round,
                 MatchEvents = new List<MatchEvent>()

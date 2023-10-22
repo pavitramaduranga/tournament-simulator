@@ -11,7 +11,7 @@ namespace TournamentBracketGenerator.UnitTests.TournamentFactory
         public void SimulateTournament_CallsGroupStageService()
         {
             // Arrange
-            int numberOfTeams = 32; // Adjust as needed
+            int numberOfTeams = 32;
             var groupStageServiceMock = new Mock<IGroupStageService>();
             var groupStage = new GroupStage(groupStageServiceMock.Object);
 
