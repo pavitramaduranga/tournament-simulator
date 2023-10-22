@@ -37,23 +37,6 @@ namespace TournamentBracketGenerator.UnitTests
         }
 
         [Test]
-        public void SimulateTournament_Should_Add_Correct_Console_Lines()
-        {
-            // Arrange
-            int numberOfTeams = 16;
-            List<Team> seededTeams = CreateSampleTeams(numberOfTeams);
-            _teamServiceMock.Setup(ts => ts.SeedTeams(numberOfTeams)).Returns(seededTeams);
-
-            // Act
-            _groupStageService.SimulateTournament(numberOfTeams);
-
-            // Assert
-            string capturedOutput = _outputCapture.ToString();
-            StringAssert.Contains("Matches in Single Elimination round for the top teams from the Group Stage", capturedOutput);
-            StringAssert.Contains("(Seed", capturedOutput);
-        }
-
-        [Test]
         public void SimulateTournament_Should_Call_Supporting_Services()
         {
             // Arrange

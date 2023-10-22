@@ -19,7 +19,7 @@ namespace TournamentBracketGenerator.UnitTests
         public void AdvanceTeam_ShouldCreateMatchRounds()
         {
             // Arrange
-            List<Team> teams = CreateTeams(8);
+            List<Team> teams = CreateTeams(16);
             var random = new Random();
             var mockRandom = new Mock<Random>();
             mockRandom.Setup(r => r.Next(2)).Returns(0); // Always return 0 for consistent winners
@@ -28,7 +28,7 @@ namespace TournamentBracketGenerator.UnitTests
             tournamentService.AdvanceTeam(teams);
 
             // Assert
-            Assert.AreEqual(3, tournamentService.matchRounds.Count); // 3 rounds for 8 teams
+            Assert.AreEqual(4, tournamentService.matchRounds.Count); // 3 rounds for 8 teams
             CollectionAssert.AllItemsAreInstancesOfType(tournamentService.matchRounds, typeof(MatchRound));
             Assert.AreEqual(8, tournamentService.matchRounds[0].MatchEvents.Count); // First round with 8 matches
         }
@@ -61,15 +61,15 @@ namespace TournamentBracketGenerator.UnitTests
         public void GetWinnerMatches_ShouldReturnMatchesForWinner()
         {
             // Arrange
-            List<Team> teams = CreateTeams(2);
+            List<Team> teams = CreateTeams(16);
             tournamentService.AdvanceTeam(teams);
-
+            Team? winner = tournamentService.GetTournamentWinner();
             // Act
-            List<MatchEvent> winnerMatches = tournamentService.GetWinnerMatches(teams[0]);
+            List<MatchEvent> winnerMatches = tournamentService.GetWinnerMatches(winner);
 
             // Assert
-            Assert.AreEqual(1, winnerMatches.Count);
-            Assert.AreEqual(teams[0].Name, winnerMatches[0].Winner);
+            Assert.AreEqual(4, winnerMatches.Count);
+            Assert.AreEqual(winner.Name, winnerMatches[0].Winner);
         }
 
         private List<Team> CreateTeams(int count)
