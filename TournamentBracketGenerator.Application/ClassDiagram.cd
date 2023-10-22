@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Model Classes">
+    <Position X="10.25" Y="0.5" Height="0.291" Width="1.401" />
+  </Comment>
+  <Comment CommentText="Service Classes">
+    <Position X="5.251" Y="0.5" Height="0.291" Width="1.401" />
+  </Comment>
+  <Comment CommentText="Factory Classes">
+    <Position X="1.475" Y="0.5" Height="0.291" Width="1.401" />
+  </Comment>
+  <Comment CommentText="Interfaces">
+    <Position X="5.251" Y="5.388" Height="0.291" Width="1.401" />
+  </Comment>
+  <Class Name="TournamentBracketGenerator.Application.TournamentFactory.ConcreteTournamentFactory" Collapsed="true">
+    <Position X="1" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAQAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>TournamentFactory\ConcreteTournamentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.TournamentFactory.GroupStage" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TournamentFactory\GroupStage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.TournamentFactory.SingleElimination" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TournamentFactory\SingleElimination.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.TournamentFactory.TournamentFactory" Collapsed="true">
+    <Position X="1" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>TournamentFactory\TournamentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Services.Application" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAIQAAAAAAAAAQAAAAAAAAQAEAAIAAAARAAAAAA=</HashCode>
+      <FileName>Services\Application.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Services.GroupStageService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>iAAQAAAAAAAAAAABAACAAIAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\GroupStageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Services.LogService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Services\LogService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Services.SingleEliminationStageService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAABAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\SingleEliminationStageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Services.TeamService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Services\TeamService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Services.TournamentService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAgAAAAAAAAAAAAAAAAAgAgAAAAAQAIAhAA=</HashCode>
+      <FileName>Services\TournamentService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Models.MatchEvent" Collapsed="true">
+    <Position X="10.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\MatchEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Models.MatchRound" Collapsed="true">
+    <Position X="12" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Models\MatchRound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TournamentBracketGenerator.Application.Models.Team" Collapsed="true">
+    <Position X="10.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAEAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Team.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TournamentBracketGenerator.Application.TournamentFactory.ITournamentFactory" Collapsed="true">
+    <Position X="1" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TournamentFactory\ITournamentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TournamentBracketGenerator.Application.Interfaces.IApplication" Collapsed="true">
+    <Position X="5.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Interfaces\IApplication.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TournamentBracketGenerator.Application.Interfaces.IGroupStageService" Collapsed="true">
+    <Position X="7" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGroupStageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TournamentBracketGenerator.Application.Interfaces.ILogService" Collapsed="true">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Interfaces\ILogService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TournamentBracketGenerator.Application.Interfaces.ISingleEliminationStageService" Collapsed="true">
+    <Position X="9" Y="6" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ISingleEliminationStageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TournamentBracketGenerator.Application.Interfaces.ITeamService" Collapsed="true">
+    <Position X="5.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITeamService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TournamentBracketGenerator.Application.Services.ITournamentService" Collapsed="true">
+    <Position X="11.75" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAgAAAAAAAAAAAAAAAAAgAAAAAAAAAIABAA=</HashCode>
+      <FileName>Interfaces\ITournamentService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

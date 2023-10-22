@@ -24,7 +24,7 @@ namespace TournamentBracketGenerator.Application.Services
             Console.WriteLine("****Tournament Dashboard****");
 
             int option = 0;
-            while (option != 3)
+            while (option != 4)
             {
                 DisplayMenu();
                 if (int.TryParse(Console.ReadLine(), out option))
@@ -47,8 +47,9 @@ namespace TournamentBracketGenerator.Application.Services
         {
             Console.WriteLine("\nSelect an option:");
             Console.WriteLine("1. Simulate World Cup Tournament");
-            Console.WriteLine("2. Simulate Group Stage");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("2. Simulate NCAA Soccer Tournament");
+            Console.WriteLine("3. Simulate Group Stage");
+            Console.WriteLine("4. Exit");
         }
 
         private void HandleUserInput(int option)
@@ -62,10 +63,14 @@ namespace TournamentBracketGenerator.Application.Services
                     numberOfTeams = 16;
                     break;
                 case 2:
-                    gameApproach = CreateTournamentFactory().GetGameMethodFactory("GroupStage");
+                    gameApproach = CreateTournamentFactory().GetGameMethodFactory("SingleElimination");
                     numberOfTeams = 64;
                     break;
                 case 3:
+                    gameApproach = CreateTournamentFactory().GetGameMethodFactory("GroupStage");
+                    numberOfTeams = 64;
+                    break;
+                case 4:
                     Console.WriteLine("Exiting application.");
                     break;
                 default:
@@ -73,9 +78,13 @@ namespace TournamentBracketGenerator.Application.Services
                     break;
             }
 
-            gameApproach?.SimulateTournament(numberOfTeams);
-            PrintMatchList();
-            PathToVictory();
+            if (option == 1 || option == 2 || option == 3)
+            {
+                gameApproach?.SimulateTournament(numberOfTeams);
+                PrintMatchList();
+                PathToVictory();
+            }
+
         }
 
         private void PrintMatchList()

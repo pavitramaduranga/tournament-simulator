@@ -65,7 +65,6 @@ namespace TournamentBracketGenerator.Application.Services
             MatchRound matchRound = new MatchRound
             {
                 Round = round,
-                Type = "SingleElimination",
                 MatchEvents = new List<MatchEvent>()
             };
 
