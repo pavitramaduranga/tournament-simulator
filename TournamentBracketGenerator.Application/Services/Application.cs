@@ -91,12 +91,21 @@ namespace TournamentBracketGenerator.Application.Services
         {
             if (_tournamentService != null)
             {
+                Console.WriteLine("Match Results:");
+
                 foreach (var matchRound in _tournamentService.matchRounds)
                 {
                     Console.WriteLine($"Round {matchRound.Round}");
+
+                    Console.WriteLine("{0,-15} {1,-15} {2,-15}", "Winner", "Loser", "Result");
+
                     foreach (var matchEvent in matchRound.MatchEvents)
                     {
-                        Console.WriteLine($"{matchEvent.Winner} vs {matchEvent.Loser} - {matchEvent.Winner} wins");
+                        string winner = matchEvent.Winner;
+                        string loser = matchEvent.Loser;
+                        string result = $"{matchEvent.Winner} wins";
+
+                        Console.WriteLine("{0,-15} {1,-15} {2,-15}", winner, loser, result);
                     }
                 }
             }
@@ -112,9 +121,14 @@ namespace TournamentBracketGenerator.Application.Services
 
                 List<MatchEvent> winnerMatches = _tournamentService.GetWinnerMatches(winningTeam);
 
+                Console.WriteLine("{0,-15} {1,-15}", "Winner", "Defeated");
+
                 foreach (MatchEvent matchEvent in winnerMatches)
                 {
-                    Console.WriteLine($"{matchEvent.Winner} defeated {matchEvent.Loser}");
+                    string winner = matchEvent.Winner;
+                    string defeated = matchEvent.Loser;
+
+                    Console.WriteLine("{0,-15} {1,-15}", winner, defeated);
                 }
                 _tournamentService.matchRounds.Clear();
                 _tournamentService.teams.Clear();
